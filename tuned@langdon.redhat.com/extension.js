@@ -11,9 +11,21 @@ function _hideHello() {
 }
 
 function _showHello() {
-    if (!text) {
+    let tunedadm = GLib.find_program_in_path('tuned-adm');
+    global.log("tunedadm= " + tunedadm);
+    let pkexec = GLib.find_program_in_path('pkexec');
+    global.log("pkexec= " + pkexec);
+    global.log("exec-line=" + pkexec + " " + tunedadm  + " list");
+    //let profile_list = GLib.spawn_command_line_sync(pkexec + " " + tunedadm  + " list").toString().trim();
+    let profile_list = GLib.spawn_command_line_sync(tunedadm  + " list").toString().trim();
+    global.log("profile_list= " + profile_list);
+       
+
+      if (!text) {
 	let tunedadm = GLib.find_program_in_path('tuned-adm');
+	global.log("tunedadm= " + tunedadm);
 	let profile_list = GLib.spawn_command_line_sync(tunedadm  + " list")[1].toString().trim();
+	global.log("profile_list= " + profile_list);
        
         //text = new St.Label({ style_class: 'helloworld-label', text: "Hello, world!" });
         text = new St.Label({ style_class: 'helloworld-label', text: profile_list });
