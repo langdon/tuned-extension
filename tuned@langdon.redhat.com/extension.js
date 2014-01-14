@@ -1,4 +1,4 @@
-
+const GLib = imports.gi.GLib;
 const St = imports.gi.St;
 const Main = imports.ui.main;
 const Tweener = imports.ui.tweener;
@@ -12,7 +12,11 @@ function _hideHello() {
 
 function _showHello() {
     if (!text) {
-        text = new St.Label({ style_class: 'helloworld-label', text: "Hello, world!" });
+	let tunedadm = GLib.find_program_in_path('tuned-adm');
+	let profile_list = GLib.spawn_command_line_sync(tunedadm  + " list")[1].toString().trim();
+       
+        //text = new St.Label({ style_class: 'helloworld-label', text: "Hello, world!" });
+        text = new St.Label({ style_class: 'helloworld-label', text: profile_list });
         Main.uiGroup.add_actor(text);
     }
 
